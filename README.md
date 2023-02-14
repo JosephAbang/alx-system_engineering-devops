@@ -1,1 +1,1 @@
-This is a project based repo for shell basics
+This directory contains software engineering essentials for the alx program
