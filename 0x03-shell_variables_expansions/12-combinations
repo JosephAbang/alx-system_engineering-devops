@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -n 64 {a..z}{a..z}  | tr " " "\n" | grep -v 'oo'
