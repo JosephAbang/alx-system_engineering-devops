@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # get pid of program
 
-pidof
+echo $$
