@@ -1,2 +1,2 @@
 #!/usr/bin/env ruby
-puts ARGV[0].scan(/[\bScho+l\b]/).join
+puts ARGV[0].scan(/\bScho+l\b/).join
