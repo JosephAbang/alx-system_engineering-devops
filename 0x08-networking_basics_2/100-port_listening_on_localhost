@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Bash script that listens on port 98 on localhost
 port=98
-socat TCP-LISTEN:$port,fork -
+sudo nc -lp $port
