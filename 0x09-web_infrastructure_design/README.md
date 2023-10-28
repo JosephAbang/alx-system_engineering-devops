@@ -19,9 +19,9 @@ This project involves designing various web infrastructure scenarios. It covers 
 
 | Task                                                       | Description                                                |
 | ---------------------------------------------------------- | ---------------------------------------------------------- |
-| [0. Simple web stack](0-simple-web-stack)                 | Design a one server web infrastructure with specific components. |
-| [1. Distributed web infrastructure](1-distributed-web-infrastructure) | Design a three server web infrastructure with additional components. |
-| [2. Secured and monitored web infrastructure](2-secured-and-monitored-web-infrastructure) | Design a three server web infrastructure with security and monitoring. |
+| [0. Simple web stack](#0-simple_web_stack)                 | Design a one server web infrastructure with specific components. |
+| [1. Distributed web infrastructure](#1-distributed-web-infrastructure) | Design a three server web infrastructure with additional components. |
+| [2. Secured and monitored web infrastructure](#2-secured-and-monitored-web-infrastructure) | Design a three server web infrastructure with security and monitoring. |
 
 ## Task Details
 
