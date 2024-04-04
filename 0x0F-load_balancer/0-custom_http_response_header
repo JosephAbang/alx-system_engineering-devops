@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
 #  script adds custom header to web server
 
-REDIRECT_301="\\\tlocation /redirect_me {\n\t\t return 301 https://google.com;\n\t}\n"
-ADD_HEADER="\\\tadd_header X-Served-By $HOSTNAME;"
 
 sudo apt-get update
 sudo apt-get -y install nginx
 sudo service nginx start
 
+# Write to home page
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-sudo sed -i "30i $REDIRECT_301" /etc/nginx/sites-available/default
+# Redirect me
+repl="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.google.com permanent;"
+sudo sed -i "s/server_name _;/$repl/" /etc/nginx/sites-enabled/default
 
-sudo sed -i "27i $ADD_HEADER" /etc/nginx/sites-available/default
+# Custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 
+# Custom HTTP response header
+sudo sed -i "server_name _;/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+
+# Check for errors 
+sudo nginx -t
+
+# restart nginx service
 sudo service nginx restart
