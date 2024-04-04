@@ -1,0 +1,28 @@
+#!usr/bin/env bash
+# Configure HAproxy so that it send traffic to web-01 and web-02
+# Distribute requests using a roundrobin algorithm
+# Make sure that HAproxy can be managed via an init script
+# Make sure that your servers are configured with the right hostnames
+
+# Configure and install haproxy on lb
+sudo apt-get update
+apt-get -y install haproxy
+
+# Modify config file
+new_config=\
+"
+frontend josh_frontend
+	bind *:80
+	mode http
+	default_backend josh_backend
+backend josh_backend
+	balance roundrobin
+	server 232627-web-01 54.157.177.128:80 check
+	server 232627-web-01 34.224.16.246:80 check
+"
+
+echo "$new_config" | sudo tee -a /etc/haproxy/haproxy.cfg
+
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
+sudo service haproxy restart
