@@ -1,0 +1,26 @@
+Check the status of the Uncomplicated Firewall (UFW)
+sudo ufw status
+
+# Enable the Uncomplicated Firewall (UFW)
+sudo ufw enable
+
+# Set the default policy for incoming traffic to deny
+sudo ufw default deny incoming
+
+# Set the default policy for outgoing traffic to allow
+sudo ufw default allow outgoing
+
+# Allow SSH traffic (port 22)
+sudo ufw allow 22/tcp
+
+# Allow HTTPS traffic (port 443)
+sudo ufw allow 443/tcp
+
+# Allow HTTP traffic (port 80)
+sudo ufw allow 80/tcp
+
+# Show the rules added to UFW
+sudo ufw show added
+
+# Enable the configured UFW rules
+sudo ufw enable
