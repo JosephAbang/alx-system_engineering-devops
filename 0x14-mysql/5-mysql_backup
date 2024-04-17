@@ -15,27 +15,6 @@ TODAY=$(date +%d-%m-%Y)
 ARCHIVE_FILE="$TODAY.tar.gz"
 
 # Dump all databases
-sudo mysqldump -u "$MYSQL_USER" -p "$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
-
-# Check if dump was successful
-if [ $? -eq 0 ]; then
-	echo "MySQL dump created successfully: $BACKUP_FILE"
-else
-	echo "Error: Failed to create MySQL dump."
-	exit 1
-fi
-
+sudo mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
 # Create compressed archive
 sudo tar -czvf "$ARCHIVE_FILE" "$BACKUP_FILE"
-
-# Check if archive creation was successful
-if [ $? -eq 0 ]; then
-	echo "Archive created successfully: $ARCHIVE_FILE"
-# Clean up the uncompressed backup (optional)
-	rm -f "$BACKUP_FILE"
-else
-	echo "Error: Failed to create archive."
-	exit 1
-fi
-
-echo "Backup completed."
