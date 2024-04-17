@@ -15,7 +15,7 @@ TODAY=$(date +%d-%m-%Y)
 ARCHIVE_FILE="$TODAY.tar.gz"
 
 # Dump all databases
-sudo mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
+sudo mysqldump -u "$MYSQL_USER" -p "$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
 
 # Check if dump was successful
 if [ $? -eq 0 ]; then
