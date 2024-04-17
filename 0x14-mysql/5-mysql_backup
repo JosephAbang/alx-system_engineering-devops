@@ -1,36 +1,41 @@
 #!/usr/bin/env bash
 # Backup script for mysql
 
-# Check if the password argument is provided
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 <mysql_password>"
-    exit 1
+# Check if password argument is provided
+if [ -z "$1" ]; then
+	echo "Error: Please provide the MySQL root password as an argument."
+	exit 1
 fi
 
-# Set the MySQL password
+# Define variables
+MYSQL_USER="root"
 MYSQL_PASSWORD="$1"
-
-# Define the backup directory and file names
-BACKUP_DIR="/path/to/backup/directory"
 BACKUP_FILE="backup.sql"
-ARCHIVE_NAME="$(date +'%d-%m-%Y').tar.gz"
+TODAY=$(date +%d-%m-%Y)
+ARCHIVE_FILE="$TODAY.tar.gz"
 
-# Dump all MySQL databases to a file
-mysqldump -u root -p"${MYSQL_PASSWORD}" --all-databases > "${BACKUP_DIR}/${BACKUP_FILE}"
+# Dump all databases
+mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
 
-# Check if mysqldump was successful
-if [ $? -ne 0 ]; then
-    echo "Error: MySQL dump failed. Exiting..."
-    exit 1
+# Check if dump was successful
+if [ $? -eq 0 ]; then
+	echo "MySQL dump created successfully: $BACKUP_FILE"
+else
+	echo "Error: Failed to create MySQL dump."
+	exit 1
 fi
 
-# Create a compressed archive of the backup file
-tar -czf "${BACKUP_DIR}/${ARCHIVE_NAME}" -C "${BACKUP_DIR}" "${BACKUP_FILE}"
+# Create compressed archive
+tar -czvf "$ARCHIVE_FILE" "$BACKUP_FILE"
 
-# Check if the archive creation was successful
-if [ $? -ne 0 ]; then
-    echo "Error: Compression failed. Exiting..."
-    exit 1
+# Check if archive creation was successful
+if [ $? -eq 0 ]; then
+	echo "Archive created successfully: $ARCHIVE_FILE"
+# Clean up the uncompressed backup (optional)
+	rm -f "$BACKUP_FILE"
+else
+	echo "Error: Failed to create archive."
+	exit 1
 fi
 
-echo "Backup completed successfully: ${BACKUP_DIR}/${ARCHIVE_NAME}"
+echo "Backup completed."
