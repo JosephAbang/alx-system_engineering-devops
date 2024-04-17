@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Backup script for mysql
 
 # Check if the password argument is provided
 if [ $# -ne 1 ]; then
