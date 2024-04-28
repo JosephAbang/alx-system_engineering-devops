@@ -14,7 +14,7 @@ if __name__ == '__main__':
     all_todo = {}
 
     for user in users:
-        tas_list = []
+        task_list = []
         for task in todos:
             if task.get('userId') == user.get('id'):
                 task_dict = {"username": user.get('username'),
