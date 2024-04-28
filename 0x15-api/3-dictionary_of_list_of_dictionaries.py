@@ -8,19 +8,21 @@ import requests
 
 
 if __name__ == '__main__':
-    url = 'https://jsonplaceholder.typicode.com/'
-    _users = requests.get(url + 'users').json()
-    all_employees_data = {}
+    users = requests.get("https://jsonplaceholder.typicode.com/users")
+    users = users.json()
+    todo = requests.get('https://jsonplaceholder.typicode.com/todos')
+    _todo = todo.json()
+    todoAll = {}
 
-    for user in _users:
-        user_id = user.get('id')
-        user_todos = requests.get(url + 'todos',
-                                        params={'userId': user_id}).json()
-        user_tasks = [{'task': todo.get('title'),
-                    'completed': todo.get('completed'),
-                    'username': user.get('username')}
-                for todo in user_todos]
-        all_employees_data[user_id] = user_tasks
+    for user in users:
+        taskList = []
+        for task in _todo:
+            if task.get('userId') == user.get('id'):
+                taskDict = {"username": user.get('username'),
+                            "task": task.get('title'),
+                            "completed": task.get('completed')}
+                taskList.append(taskDict)
+        todoAll[user.get('id')] = taskList
 
-    with open('todo_all_employees.json', 'w+') as json_f:
-        json.dump(all_employees_data, json_f)
+    with open('todo_all_employees.json', mode='w') as f:
+        json.dump(todoAll, f)
