@@ -9,21 +9,19 @@ import requests
 
 if __name__ == '__main__':
 
-    users = requests.get("https://jsonplaceholder.typicode.com/users")
-    users = users.json()
-    todos = requests.get('https://jsonplaceholder.typicode.com/todos')
-    todos = todo.json()
+    users = requests.get("https://jsonplaceholder.typicode.com/users").json()
+    todos = requests.get('https://jsonplaceholder.typicode.com/todos').json()
     all_todo = {}
 
     for user in users:
-        taskList = []
+        tas_list = []
         for task in todos:
             if task.get('userId') == user.get('id'):
-                taskDict = {"username": user.get('username'),
+                task_dict = {"username": user.get('username'),
                             "task": task.get('title'),
                             "completed": task.get('completed')}
-                taskList.append(taskDict)
-        all_todo[user.get('id')] = taskList
+                task_list.append(task_dict)
+        all_todo[user.get('id')] = task_list
 
     with open('todo_all_employees.json', mode='w') as f:
         json.dump(all_todo, f)
